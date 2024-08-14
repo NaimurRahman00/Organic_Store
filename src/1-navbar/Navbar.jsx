@@ -2,9 +2,9 @@ import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between px-4 py-2 text-black">
-      <div className="scale-100 cursor-pointer rounded-2xl px-3 py-2 text-xl font-bold text-black transition-all duration-200 hover:scale-110">
-        <h2>OrganStore</h2>
+    <nav className="flex items-center justify-between px-4 py-4 text-black">
+      <div className="scale-100 cursor-pointer rounded-2xl px-3 py-2 text-2xl font-bold text-black transition-all duration-200 hover:scale-110">
+        <h2><span className="text-emerald-500">Organ</span>Store</h2>
       </div>
       <div className="flex items-center justify-between gap-16">
         <ul className="flex items-center justify-between gap-10">
@@ -56,13 +56,13 @@ const Navbar = () => {
         <div className="flex items-center justify-between gap-5">
           <Link
             to="/login"
-            className="rounded-full bg-sky-600 px-6 py-2 text-white transition-all duration-300 hover:scale-90 active:scale-100"
+            className="rounded bg-transparent px-6 py-2 text-emerald-500 border-2 border-emerald-500 transition-all duration-300 hover:scale-90 hover:bg-emerald-500 hover:text-white active:scale-100"
           >
             Log In
           </Link>
           <Link
             to="/register"
-            className="rounded-full bg-sky-600 px-6 py-2 text-white transition-all duration-300 hover:scale-90 active:scale-100"
+            className="rounded bg-transparent px-6 py-2 text-emerald-500 border-2 border-emerald-500 transition-all duration-300 hover:scale-90 hover:bg-emerald-500 hover:text-white active:scale-100"
           >
             Register
           </Link>
