@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -8,53 +8,50 @@ const Navbar = () => {
       </div>
       <div className="flex items-center justify-between gap-16">
         <ul className="flex items-center justify-between gap-10">
-          <a
-            href="#"
+          <NavLink
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            Home
+            <a href="#">Home</a>
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
+          </NavLink>
           <li>/</li>
-          <a
-            href="#products"
+          <NavLink
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            Products
+            <a href="products">Products</a>
+            
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
+          </NavLink>
           <li>/</li>
-          <a
-            href="#about"
+          <NavLink
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            About us
+            <a href="#about">About us</a>
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
+          </NavLink>
           <li>/</li>
-          <a
-            href="#contact"
+          <NavLink
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            Contact
+            <a href="#about">About</a>
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
+          </NavLink>
         </ul>
         <div className="flex items-center justify-between gap-5">
           <Link
