@@ -8,7 +8,7 @@ const Products = () => {
     queryFn: async () => getData(),
   });
 
-  // getting all jobs data using axios
+  // getting all products data using axios
   const getData = async () => {
     const data = await axios(`${import.meta.env.VITE_API_URL}/products`);
     return data.data;
@@ -183,11 +183,9 @@ const Products = () => {
         </div>
         {/* Products */}
         <div className="col-span-3 grid grid-cols-3 gap-5 my-10">
-          {
-            products.map(product => {
-              
-            })
-          }
+          {/* {Array.isArray(products) && products?.map((product) => {
+            console.log()
+          })} */}
         </div>
       </div>
     </section>

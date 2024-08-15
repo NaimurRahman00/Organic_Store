@@ -32,44 +32,48 @@ const Navbar = () => {
         >
           {/* <ul className="items-center justify-between gap-10 hidden sm:flex"> */}
             <NavLink
+            to='#'
               className={({ isActive }) =>
                 isActive
                   ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                   : "flex flex-col text-white"
               }
             >
-              <a href="#">Home</a>
+              <span>Home</span>
               <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
             </NavLink>
             <NavLink
+            to='#products'
               className={({ isActive }) =>
                 isActive
                   ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                   : "flex flex-col text-white"
               }
             >
-              <a href="products">Products</a>
+              <span>Products</span>
 
               <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
             </NavLink>
             <NavLink
+            to='#about'
               className={({ isActive }) =>
                 isActive
                   ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                   : "flex flex-col text-white"
               }
             >
-              <a href="#about">About us</a>
+              <span>About us</span>
               <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
             </NavLink>
             <NavLink
+            to='#contact'
               className={({ isActive }) =>
                 isActive
                   ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                   : "flex flex-col text-white"
               }
             >
-              <a href="#about">About</a>
+              <span>Contact</span>
               <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
             </NavLink>
             <Link
@@ -90,47 +94,51 @@ const Navbar = () => {
       <div className="hidden sm:flex items-center justify-between gap-16">
         <ul className="flex items-center justify-between gap-10">
           <NavLink
+          to='#'
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            <a href="#">Home</a>
+            <span>Home</span>
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
           </NavLink>
           <li>/</li>
           <NavLink
+          to='#products'
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            <a href="products">Products</a>
+            <span>Products</span>
 
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
           </NavLink>
           <li>/</li>
           <NavLink
+          to='#about'
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            <a href="#about">About us</a>
+            <span>About us</span>
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
           </NavLink>
           <li>/</li>
           <NavLink
+          to='#contact'
             className={({ isActive }) =>
               isActive
                 ? "group flex cursor-pointer flex-col text-emerald-300 font-semibold"
                 : "flex flex-col text-white"
             }
           >
-            <a href="#about">About</a>
+            <span>Contact</span>
             <span className="mt-[2px] h-[3px] w-[0px] rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
           </NavLink>
         </ul>
