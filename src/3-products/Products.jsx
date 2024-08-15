@@ -184,29 +184,62 @@ const Products = () => {
         {/* Products */}
         <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-10">
           {products?.map((product) => (
-            <div key={product._id} className="max-w-full space-y-4 rounded-lg bg-white p-6 shadow-lg">
+            <div
+              key={product._id}
+              className="max-w-full space-y-4 rounded-lg bg-white p-6 shadow-lg flex flex-col justify-between"
+            >
               <img
                 width={400}
                 height={400}
                 className="h-[275px] w-[350px] rounded-lg object-cover"
-                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="card navigate ui"
+                src={product.productImage || product.ProductImage}
               />
               <div className="grid gap-2">
-                <h1 className="text-lg font-semibold ">Product Name</h1>
-                <p className="text-sm text-gray-500 dark:text-white/60">
-                  This is a brief description of the product. It highlights the
-                  key features and benefits.
+                <h1 className="text-lg font-semibold ">
+                  {product.productName || product.ProductName}
+                </h1>
+                <p className="text-sm text-gray-500">
+                  {product.description || product.Description}
                 </p>
-                <div className="text-lg font-semibold">$99.99</div>
+                <div className="flex justify-between">
+                  {" "}
+                  <h2 className="text-base font-semibold">
+                    <span className="mr-2">Price:</span>${product.price || product.Price}
+                  </h2>
+                  <h2 className="text-base font-semibold">
+                    <span className="mr-2">Rating:</span>
+                    {product.ratings || product.Ratings}
+                  </h2>
+                </div>
               </div>
-              <div className="flex gap-4">
-                <button className="rounded-lg bg-slate-800 px-6 py-2 text-[12px] font-semibold text-white duration-300 hover:bg-slate-950 sm:text-sm md:text-base ">
-                  Add to Cart
-                </button>
-                <button className="rounded-md border border-black px-4 dark:border-white dark:hover:text-slate-800 dark:hover:bg-white  py-2  duration-300 hover:bg-gray-200">
-                  View Details
-                </button>
+              <div className="">
+                <h2 className="rounded-md mb-2 py-.5">
+                  <span className="text-lg font-semibold mr-2">Made on:</span>
+                  {new Date(
+                    product.productCreationDateTime ||
+                      product.ProductCreationDate ||
+                      product.creationDateTime ||
+                      product.ProductCreationDateTime
+                  ).toLocaleString("en-GB", {
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                  }) +
+                    ", " +
+                    new Date(
+                      product.productCreationDateTime ||
+                        product.ProductCreationDate ||
+                        product.creationDateTime ||
+                        product.ProductCreationDateTime
+                    ).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                </h2>
+                <h2 className="rounded bg-emerald-700 px-2 py-1 text-base flex items-center justify-center font-semibold text-white duration-300">
+                  {product.category || product.Category}
+                </h2>
               </div>
             </div>
           ))}
