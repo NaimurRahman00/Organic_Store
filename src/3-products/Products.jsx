@@ -29,14 +29,14 @@ const Products = () => {
         </div>
         <div className="flex gap-2">
           <select className="select-success w-fit max-w-xs focus:border-2 border border-emerald-500 px-2 py-0.5 rounded font-semibold text-emerald-800">
-            <option disabled selected>
+            <option disabled defaultValue>
               Sort by Price
             </option>
             <option> Low to High</option>
             <option>High to Low</option>
           </select>
           <select className="select-success w-fit max-w-xs focus:border-2 border border-emerald-500 px-2 py-0.5 rounded font-semibold text-emerald-800">
-            <option disabled selected>
+            <option disabled defaultValue>
               Sort by date
             </option>
             <option> Newest first</option>
