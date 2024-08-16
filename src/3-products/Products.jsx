@@ -5,21 +5,22 @@ import Pagination from "../component/Pagination";
 
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortBy, setSortBy] = useState(""); 
-  const [order, setOrder] = useState(""); 
+  const [sortBy, setSortBy] = useState("");
+  const [order, setOrder] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  const getData = async (page, sortBy, order) => {
+  // Updated getData function to include search query
+  const getData = async (page, sortBy, order, searchQuery) => {
     const { data } = await axios.get(
-      `${
-        import.meta.env.VITE_API_URL
-      }/products?page=${page}&limit=12&sortBy=${sortBy}&order=${order}`
+      `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=12&sortBy=${sortBy}&order=${order}&search=${searchQuery}`
     );
     return data;
   };
 
+  // Updated useQuery to include searchQuery
   const { data: productsData = {}, isLoading } = useQuery({
-    queryKey: ["products", currentPage, sortBy, order],
-    queryFn: () => getData(currentPage, sortBy, order),
+    queryKey: ["products", currentPage, sortBy, order, searchQuery],
+    queryFn: () => getData(currentPage, sortBy, order, searchQuery),
     keepPreviousData: true,
   });
 
@@ -36,16 +37,20 @@ const Products = () => {
 
   const handleSortByDate = () => {
     setSortBy("creationDateTime");
-    setOrder("desc"); 
+    setOrder("desc");
+  };
+
+  // New function to handle search input change
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when searching
   };
 
   return (
     <section className="mx-7 min-h-screen">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl text-emerald-500 font-semibold">
-            Our Products
-          </h1>
+          <h1 className="text-4xl text-emerald-500 font-semibold">Our Products</h1>
           <p className="text-xl text-black/90 font-semibold">
             Find your favorite organic products on{" "}
             <span className="text-emerald-500 font-bold text-2xl">Organ</span>
@@ -95,6 +100,8 @@ const Products = () => {
               <input
                 className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
                 placeholder="Products name.."
+                value={searchQuery} // Controlled input value
+                onChange={handleSearchChange} // Handle search input change
               />
             </div>
             {/* Price range */}
@@ -252,7 +259,6 @@ const Products = () => {
                     {product.description || product.Description}
                   </p>
                   <div className="flex justify-between">
-                    {" "}
                     <h2 className="text-base font-semibold">
                       <span className="mr-2">Price:</span>$
                       {product.price || product.Price}
