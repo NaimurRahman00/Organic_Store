@@ -4,29 +4,39 @@ import axios from "axios";
 import Pagination from "../component/Pagination";
 
 const Products = () => {
-  // State to keep track of the current page
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState(""); 
+  const [order, setOrder] = useState(""); 
 
-  // Function to fetch paginated products
-  const getData = async (page) => {
+  const getData = async (page, sortBy, order) => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=12`
+      `${
+        import.meta.env.VITE_API_URL
+      }/products?page=${page}&limit=12&sortBy=${sortBy}&order=${order}`
     );
     return data;
   };
 
-  // Fetching products data with react-query
   const { data: productsData = {}, isLoading } = useQuery({
-    queryKey: ["products", currentPage],
-    queryFn: () => getData(currentPage),
+    queryKey: ["products", currentPage, sortBy, order],
+    queryFn: () => getData(currentPage, sortBy, order),
     keepPreviousData: true,
   });
 
   const { products = [], totalPages } = productsData;
 
-  // Handle page change
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const handleSortByPrice = (e) => {
+    setSortBy("price");
+    setOrder(e.target.value === "Low to High" ? "asc" : "desc");
+  };
+
+  const handleSortByDate = () => {
+    setSortBy("creationDateTime");
+    setOrder("desc"); 
   };
 
   return (
@@ -43,16 +53,30 @@ const Products = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <select className="select-success w-fit max-w-xs focus:border-2 border border-emerald-500 px-2 py-0.5 rounded font-semibold text-emerald-800">
-            <option disabled defaultValue>
+          <select
+            onChange={handleSortByPrice}
+            className="select-success w-fit max-w-xs focus:border-2 border border-emerald-500 px-2 py-0.5 rounded font-semibold text-emerald-800"
+            value={
+              sortBy === "price"
+                ? order === "asc"
+                  ? "Low to High"
+                  : "High to Low"
+                : ""
+            }
+          >
+            <option disabled value="">
               Sort by Price
             </option>
             <option>Low to High</option>
             <option>High to Low</option>
           </select>
-          <select className="select-success w-fit max-w-xs focus:border-2 border border-emerald-500 px-2 py-0.5 rounded font-semibold text-emerald-800">
-            <option disabled defaultValue>
-              Sort by date
+          <select
+            onChange={handleSortByDate}
+            className="select-success w-fit max-w-xs focus:border-2 border border-emerald-500 px-2 py-0.5 rounded font-semibold text-emerald-800"
+            value={sortBy === "creationDateTime" ? "Newest first" : ""}
+          >
+            <option disabled value="">
+              Sort by Date
             </option>
             <option>Newest first</option>
           </select>
