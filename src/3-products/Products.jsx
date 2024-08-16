@@ -1,21 +1,33 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Pagination from "../component/Pagination";
 
 const Products = () => {
-  // Getting data using TanStack queries
-  const { data: products = [], isLoading } = useQuery({
-    queryKey: ["porducts"],
-    queryFn: async () => getData(),
+  // State to keep track of the current page
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Function to fetch paginated products
+  const getData = async (page) => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/products?page=${page}&limit=12`
+    );
+    return data;
+  };
+
+  // Fetching products data with react-query
+  const { data: productsData = {}, isLoading } = useQuery({
+    queryKey: ["products", currentPage],
+    queryFn: () => getData(currentPage),
+    keepPreviousData: true,
   });
 
-  // getting all products data using axios
-const getData = async (page = 1, limit = 12) => {
-    const { data } = await axios(`${import.meta.env.VITE_API_URL}/products?page=${page}&limit=${limit}`);
-    return data.products;
-};
+  const { products = [], totalPages } = productsData;
 
-console.log(products)
-
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <section className="mx-7 min-h-screen">
@@ -35,19 +47,20 @@ console.log(products)
             <option disabled defaultValue>
               Sort by Price
             </option>
-            <option> Low to High</option>
+            <option>Low to High</option>
             <option>High to Low</option>
           </select>
           <select className="select-success w-fit max-w-xs focus:border-2 border border-emerald-500 px-2 py-0.5 rounded font-semibold text-emerald-800">
             <option disabled defaultValue>
               Sort by date
             </option>
-            <option> Newest first</option>
+            <option>Newest first</option>
           </select>
         </div>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
-        {/* search, sort, filter function */}
+        {/* search, sort, filter section */}
         <div className="bg-emerald-100 rounded-xl p-4 my-10 col-span-1 md:col-span-1">
           <div className="sticky top-5">
             {/* Search Input */}
@@ -56,7 +69,7 @@ console.log(products)
                 Search
               </h2>
               <input
-                className="flex h-10 w-full rounded-md border  px-3 py-2 text-sm focus:outline-none"
+                className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
                 placeholder="Products name.."
               />
             </div>
@@ -66,12 +79,12 @@ console.log(products)
             </h2>
             <div className="flex items-center justify-start gap-2 mb-5">
               <input
-                className="flex h-10 w-full rounded-md border  px-3 py-2 text-sm focus:outline-none"
+                className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
                 placeholder="Min price"
                 type="number"
               />
               <input
-                className="flex h-10 w-full rounded-md border  px-3 py-2 text-sm focus:outline-none"
+                className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus:outline-none"
                 placeholder="Max price"
                 type="number"
               />
@@ -188,71 +201,85 @@ console.log(products)
             </div>
           </div>
         </div>
+
         {/* Products */}
         <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-10">
-          {products?.map((product) => (
-            <div
-              key={product._id}
-              className="max-w-full space-y-4 rounded-lg bg-white p-6 shadow-lg flex flex-col justify-between"
-            >
-              <img
-                width={400}
-                height={400}
-                className="h-[275px] w-[350px] rounded-lg object-cover"
-                src={product.productImage || product.ProductImage}
-              />
-              <div className="grid gap-2">
-                <h1 className="text-lg font-semibold ">
-                  {product.productName || product.ProductName}
-                </h1>
-                <p className="text-sm text-gray-500">
-                  {product.description || product.Description}
-                </p>
-                <div className="flex justify-between">
-                  {" "}
-                  <h2 className="text-base font-semibold">
-                    <span className="mr-2">Price:</span>$
-                    {product.price || product.Price}
-                  </h2>
-                  <h2 className="text-base font-semibold">
-                    <span className="mr-2">Rating:</span>
-                    {product.ratings || product.Ratings}
-                  </h2>
+          {isLoading ? (
+            <div className="flex items-center justify-center h-full relative -right-80">
+              <div className="w-10 h-10 animate-[spin_1s_linear_infinite] rounded-full border-4 border-r-transparent border-l-transparent border-emerald-400"></div>
+            </div>
+          ) : (
+            products.map((product) => (
+              <div
+                key={product._id}
+                className="max-w-full space-y-4 rounded-lg bg-white p-6 shadow-lg flex flex-col justify-between"
+              >
+                <img
+                  width={400}
+                  height={400}
+                  className="h-[275px] w-[350px] rounded-lg object-cover"
+                  src={product.productImage || product.ProductImage}
+                />
+                <div className="grid gap-2">
+                  <h1 className="text-lg font-semibold ">
+                    {product.productName || product.ProductName}
+                  </h1>
+                  <p className="text-sm text-gray-500">
+                    {product.description || product.Description}
+                  </p>
+                  <div className="flex justify-between">
+                    {" "}
+                    <h2 className="text-base font-semibold">
+                      <span className="mr-2">Price:</span>$
+                      {product.price || product.Price}
+                    </h2>
+                    <h2 className="text-base font-semibold">
+                      <span className="mr-2">Rating:</span>
+                      {product.ratings || product.Ratings}
+                    </h2>
+                  </div>
                 </div>
-              </div>
-              <div className="">
-                <h2 className="rounded-md mb-2 py-.5">
-                  <span className="text-lg font-semibold mr-2">Made on:</span>
-                  {new Date(
-                    product.productCreationDateTime ||
-                      product.ProductCreationDate ||
-                      product.creationDateTime ||
-                      product.ProductCreationDateTime
-                  ).toLocaleString("en-GB", {
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: true,
-                  }) +
-                    ", " +
-                    new Date(
+                <div className="">
+                  <h2 className="rounded-md mb-2 py-.5">
+                    <span className="text-lg font-semibold mr-2">Made on:</span>
+                    {new Date(
                       product.productCreationDateTime ||
                         product.ProductCreationDate ||
                         product.creationDateTime ||
                         product.ProductCreationDateTime
-                    ).toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                </h2>
-                <h2 className="rounded bg-emerald-700 px-2 py-1 text-base flex items-center justify-center font-semibold text-white duration-300">
-                  {product.category || product.Category}
-                </h2>
+                    ).toLocaleString("en-GB", {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    }) +
+                      ", " +
+                      new Date(
+                        product.productCreationDateTime ||
+                          product.ProductCreationDate ||
+                          product.creationDateTime ||
+                          product.ProductCreationDateTime
+                      ).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                  </h2>
+                  <h2 className="rounded bg-emerald-700 px-2 py-1 text-base flex items-center justify-center font-semibold text-white duration-300">
+                    {product.category || product.Category}
+                  </h2>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </section>
   );
 };
