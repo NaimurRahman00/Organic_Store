@@ -9,10 +9,13 @@ const Products = () => {
   });
 
   // getting all products data using axios
-  const getData = async () => {
-    const data = await axios(`${import.meta.env.VITE_API_URL}/products`);
-    return data.data;
-  };
+const getData = async (page = 1, limit = 12) => {
+    const { data } = await axios(`${import.meta.env.VITE_API_URL}/products?page=${page}&limit=${limit}`);
+    return data.products;
+};
+
+console.log(products)
+
 
   return (
     <section className="mx-7 min-h-screen">
