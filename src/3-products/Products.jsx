@@ -125,9 +125,9 @@ const Products = () => {
 
   return (
     <section className="mx-7 min-h-screen">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl text-emerald-500 font-semibold">
+          <h1 className="text-4xl text-emerald-500 font-semibold hidden md:flex">
             Our Products
           </h1>
           <p className="text-xl text-black/90 font-semibold">
@@ -168,7 +168,7 @@ const Products = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
-        <div className="bg-emerald-100 rounded-xl p-4 my-10 col-span-1 md:col-span-1">
+        <div className="bg-emerald-100 rounded-xl p-4 my-5 md:my-10 col-span-4 md:col-span-1">
           <div className="sticky top-5">
             {/* Search Input */}
             <div className="rounded-md shadow-sm w-full">
@@ -264,7 +264,9 @@ const Products = () => {
         <div className="col-span-3 md:col-span-2 lg:col-span-3">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {isLoading ? (
-              <p>Loading...</p>
+              <div className="flex items-center justify-center h-screen relative -right-96 -top-20">
+                <div className="w-10 h-10 animate-[spin_1s_linear_infinite] rounded-full border-4 border-r-emerald-900 border-emerald-400"></div>
+              </div>
             ) : (
               products.map((product) => (
                 <ProductCard key={product._id} product={product} />
